@@ -981,7 +981,7 @@ public class TouchInputHandler {
             }
 
             if (secondaryButtonMode && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN)) {
-                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_UP, true);
+                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_DOWN, true);
                 return true;
             }
 
