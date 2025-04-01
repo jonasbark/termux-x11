@@ -982,7 +982,6 @@ public class TouchInputHandler {
 
             if (secondaryButtonMode && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN)) {
                 mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_DOWN, true);
-                return true;
             }
 
             if (x == newX && y == newY && pressure == e.getPressure() && tilt == e.getAxisValue(MotionEvent.AXIS_TILT) &&
