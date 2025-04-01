@@ -980,8 +980,10 @@ public class TouchInputHandler {
                 newY *= mRenderData.scale.y;
             }
 
-            if (secondaryButtonMode && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN)) {
-                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_DOWN, true);
+            if (secondaryButtonMode && action == MotionEvent.ACTION_UP) {
+                //mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_DOWN, true);
+                mInjector.sendMouseClick(InputStub.BUTTON_RIGHT, true);
+                return true;
             }
 
             if (x == newX && y == newY && pressure == e.getPressure() && tilt == e.getAxisValue(MotionEvent.AXIS_TILT) &&
