@@ -939,7 +939,7 @@ public class TouchInputHandler {
         int extractButtons(MotionEvent e) {
             if (mInjector.stylusButtonContactModifierMode) {
                 if (e.getPressure() > 0) {
-                    if (hasButton(e, MotionEvent.BUTTON_STYLUS_SECONDARY))
+                    if (hasButton(e, MotionEvent.BUTTON_STYLUS_SECONDARY) || secondaryButtonMode)
                         return (1 << 1);
                     if (hasButton(e, MotionEvent.BUTTON_STYLUS_PRIMARY))
                         return (1 << 2);
@@ -950,7 +950,7 @@ public class TouchInputHandler {
                 int buttons = 0;
                 if (e.getPressure() > 0)
                     buttons = STYLUS_INPUT_HELPER_MODE;
-                if (hasButton(e, MotionEvent.BUTTON_STYLUS_SECONDARY))
+                if (hasButton(e, MotionEvent.BUTTON_STYLUS_SECONDARY) || secondaryButtonMode)
                     buttons |= (1 << 1);
                 if (hasButton(e, MotionEvent.BUTTON_STYLUS_PRIMARY))
                     buttons |= (1 << 2);
@@ -978,12 +978,6 @@ public class TouchInputHandler {
             } else {
                 newX *= mRenderData.scale.x;
                 newY *= mRenderData.scale.y;
-            }
-
-            if (secondaryButtonMode && action == MotionEvent.ACTION_UP) {
-                //mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_DOWN, true);
-                mInjector.sendMouseClick(InputStub.BUTTON_RIGHT, true);
-                return true;
             }
 
             if (x == newX && y == newY && pressure == e.getPressure() && tilt == e.getAxisValue(MotionEvent.AXIS_TILT) &&
