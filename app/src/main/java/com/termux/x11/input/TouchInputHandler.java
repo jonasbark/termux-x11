@@ -833,8 +833,11 @@ public class TouchInputHandler {
             if (e.isFromSource(InputDevice.SOURCE_KEYBOARD)) {
                 if (e.getRepeatCount() != 0) // ignore auto-repeat
                     return true;
-                if (e.getAction() == KeyEvent.ACTION_UP || e.getAction() == KeyEvent.ACTION_DOWN)
-                    mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, e.getAction() == KeyEvent.ACTION_DOWN, true);
+                // right click triggered on press
+                /*if (e.getAction() == KeyEvent.ACTION_UP || e.getAction() == KeyEvent.ACTION_DOWN)
+                    mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, e.getAction() == KeyEvent.ACTION_DOWN, true);*/
+
+                mStylusListener.setSecondaryButtonMode(e.getAction() == KeyEvent.ACTION_DOWN);
                 return true;
             }
 
@@ -920,6 +923,7 @@ public class TouchInputHandler {
     private class StylusListener {
         private float x = 0, y = 0, pressure = 0, tilt = 0, orientation = 0;
         private int buttons = 0;
+        private boolean secondaryButtonMode;
 
         private int convertOrientation(float value) {
             int newValue = (int) (((value * 180 / Math.PI) + 360) % 360);
@@ -976,6 +980,11 @@ public class TouchInputHandler {
                 newY *= mRenderData.scale.y;
             }
 
+            if (secondaryButtonMode && action == MotionEvent.ACTION_UP) {
+                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, false, true);
+                return true;
+            }
+
             if (x == newX && y == newY && pressure == e.getPressure() && tilt == e.getAxisValue(MotionEvent.AXIS_TILT) &&
                     orientation == e.getAxisValue(MotionEvent.AXIS_ORIENTATION) && buttons == newButtons)
                 return true;
@@ -1000,6 +1009,14 @@ public class TouchInputHandler {
                     mInjector.stylusIsMouse);
 
             return true;
+        }
+
+        public void setSecondaryButtonMode(boolean secondaryButtonMode) {
+            this.secondaryButtonMode = secondaryButtonMode;
+        }
+
+        public boolean isSecondaryButtonMode() {
+            return secondaryButtonMode;
         }
     }
 
