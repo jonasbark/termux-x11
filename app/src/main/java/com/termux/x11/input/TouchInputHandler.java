@@ -834,10 +834,10 @@ public class TouchInputHandler {
                 if (e.getRepeatCount() != 0) // ignore auto-repeat
                     return true;
                 // right click triggered on press
-                /*if (e.getAction() == KeyEvent.ACTION_UP || e.getAction() == KeyEvent.ACTION_DOWN)
-                    mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, e.getAction() == KeyEvent.ACTION_DOWN, true);*/
+                if (e.getAction() == KeyEvent.ACTION_UP || e.getAction() == KeyEvent.ACTION_DOWN)
+                    mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, e.getAction() == KeyEvent.ACTION_DOWN, true);
 
-                mStylusListener.setSecondaryButtonMode(e.getAction() == KeyEvent.ACTION_DOWN);
+                //mStylusListener.setSecondaryButtonMode(e.getAction() == KeyEvent.ACTION_DOWN);
                 return true;
             }
 
