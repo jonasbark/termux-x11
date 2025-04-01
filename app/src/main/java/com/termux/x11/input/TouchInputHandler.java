@@ -980,8 +980,8 @@ public class TouchInputHandler {
                 newY *= mRenderData.scale.y;
             }
 
-            if (secondaryButtonMode && action == MotionEvent.ACTION_UP) {
-                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, false, true);
+            if (secondaryButtonMode && (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN)) {
+                mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, action == MotionEvent.ACTION_UP, true);
                 return true;
             }
 
