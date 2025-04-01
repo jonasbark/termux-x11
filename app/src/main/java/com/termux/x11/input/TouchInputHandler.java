@@ -828,6 +828,22 @@ public class TouchInputHandler {
             }
         }
 
+        // Oppo Pen stylus action
+        if (k == 721) {
+            if (e.isFromSource(InputDevice.SOURCE_KEYBOARD)) {
+                if (e.getRepeatCount() != 0) // ignore auto-repeat
+                    return true;
+                if (e.getAction() == KeyEvent.ACTION_UP || e.getAction() == KeyEvent.ACTION_DOWN)
+                    mActivity.getLorieView().sendMouseEvent(-1, -1, InputStub.BUTTON_RIGHT, e.getAction() == KeyEvent.ACTION_DOWN, true);
+                return true;
+            }
+
+            if (e.getScanCode() == KEY_BACK && e.getDevice().getKeyboardType() != KEYBOARD_TYPE_ALPHABETIC || e.getScanCode() == 0) {
+                backButtonAction.accept(k, e.getAction() == KeyEvent.ACTION_DOWN);
+                return true;
+            }
+        }
+
         return mInjector.sendKeyEvent(e);
     }
 
